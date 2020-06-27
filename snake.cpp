@@ -96,7 +96,7 @@ void DieuKhien(Snake& snake)
 	//trang thai cua tung dot
 	for (int i = snake.n - 1; i > 0; i--)
 		snake.dot[i] = snake.dot[i - 1];
-	if (kbhit())
+	if (_kbhit())
 	{
 		int key = _getch();
 		//dieu khien cai dau snake
@@ -122,7 +122,7 @@ void DieuKhien(Snake& snake)
 		snake.dot[0].x++;
 }
 //
-int Xuly(Snake& snake, HoaQua& hq, int& thoigian)
+int Xuly(Snake& snake, HoaQua& hq, int& thoigian, int &countPoint)
 {
 	if (snake.dot[0].x < 0 || snake.dot[0].x >= consoleWidth ||
 		snake.dot[0].y < 0 || snake.dot[0].y >= consoleHeight)
@@ -143,18 +143,18 @@ int Xuly(Snake& snake, HoaQua& hq, int& thoigian)
 			snake.dot[0].x--;
 		else if (snake.tt == right)
 			snake.dot[0].x++;
-
 		hq.td.x = rand() % consoleWidth;
 		hq.td.y = rand() % consoleHeight;
 		if (thoigian > 50)
 			thoigian -= 5;
+		countPoint++;
 	}
 
 }
 
 int main()
 {
-	int ma;
+	int ma, count =0;
 	int thoigian = 200;
 	srand(time(NULL)); // khoi tao bo sinh so ngau nhien
 	HoaQua hq;
@@ -164,17 +164,19 @@ int main()
 	{
 		//hien thi
 		HienThi(snake, hq);
-		gotoXY(35, 2);
-		std::cout<<" Dieu khien ran bang a, w, s, d!";
+		gotoXY(30, 2);
+		std::cout << " Dieu khien ran bang a, w, s, d!";
+		gotoXY(30, 5);
+		std::cout << " Diem: " << count;
 		//dieu khien;
 		DieuKhien(snake);
 		//xu ly
-		ma = Xuly(snake, hq, thoigian);
+		ma = Xuly(snake, hq, thoigian, count);
 		//thua ,thang
 		if (ma == -1) //thua
 		{
 			gotoXY(consoleWidth + 1, 10);
-			std::cout << " Ban da thua. :( \nThanks you ! enter de thoat game";
+			std::cout << " Ban da thua. :( . Nhan enter de thoat game";
 			while (_getch() != 13);
 			break;
 		}
