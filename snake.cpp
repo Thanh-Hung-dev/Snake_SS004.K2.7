@@ -96,7 +96,7 @@ void DieuKhien(Snake& snake)
 	//trang thai cua tung dot
 	for (int i = snake.n - 1; i > 0; i--)
 		snake.dot[i] = snake.dot[i - 1];
-	if (_kbhit())
+	if (kbhit())
 	{
 		int key = _getch();
 		//dieu khien cai dau snake
