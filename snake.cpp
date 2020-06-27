@@ -154,7 +154,7 @@ int Xuly(Snake& snake, HoaQua& hq, int& thoigian, int &countPoint)
 
 int main()
 {
-	int ma, count =0;
+	int ma, highScore=0, count = 0;
 	int thoigian = 200;
 	srand(time(NULL)); // khoi tao bo sinh so ngau nhien
 	HoaQua hq;
@@ -168,21 +168,32 @@ int main()
 		std::cout << " Dieu khien ran bang a, w, s, d!";
 		gotoXY(30, 5);
 		std::cout << " Diem: " << count;
+		gotoXY(30, 6);
+		std::cout << " Diem cao: " << highScore;
 		//dieu khien;
 		DieuKhien(snake);
 		//xu ly
 		ma = Xuly(snake, hq, thoigian, count);
+		if (count >= highScore) highScore = count;
 		//thua ,thang
 		if (ma == -1) //thua
 		{
+			char c;
 			gotoXY(consoleWidth + 1, 10);
-			std::cout << " Ban da thua. :( . Nhan enter de thoat game";
-			while (_getch() != 13);
-			break;
+			std::cout << " Ban da thua. :(  Nhan enter de thoat game hoac r de choi lai";
+			while (c = _getch()) {
+				if (c == 13 || c == 'r')
+					break;
+				else
+					continue;
+			}
+			if (c == 13)
+				break;
+			KhoiTao(snake, hq);
+			count = 0;
 		}
 		//tocdo game
 		Sleep(thoigian);
 	}
-
 	return 0;
 }
